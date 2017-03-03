@@ -3,8 +3,11 @@
 
 
 **客户端使用方法：**
+
 	1. 首先创建远程接口，参考src/main/java/com/ysstech/micro/model/DataRemote.java(包名最好一样)
+	
 	2. 客户端代码：
+	
 ```java
 	Properties properties = new Properties();
 	properties.setProperty(Context.INITIAL_CONTEXT_FACTORY, 	"com.sun.jndi.rmi.registry.RegistryContextFactory");
