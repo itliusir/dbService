@@ -3,6 +3,7 @@ package com.ysstech.micro.server;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Properties;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,6 +39,7 @@ public class RmiJndiServer implements ServletContextListener {
 					.setProperty(Context.PROVIDER_URL, "rmi://localhost:1111");
 			//根据JNDI属性，创建上下文
 			InitialContext ctx = new InitialContext(properties);
+			//DataSource ds = server.getOracleDataSource();
 			//将服务端接口实现对象与JNDI命名绑定，这个地方写的并不是很规范
             //如果在J2EE开发中，规范的写法是，绑定的名字要以java:comp/env/开头
 			ctx.bind("dataSource", server);
@@ -47,6 +49,9 @@ public class RmiJndiServer implements ServletContextListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

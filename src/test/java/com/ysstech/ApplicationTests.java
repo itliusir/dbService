@@ -16,7 +16,7 @@ public class ApplicationTests {
 	@Test
 	public void test() throws Exception{
 		DataRemote server = new DataRemoteImpl();
-		DataSource ds = server.getOracleDataSource();
+		DataSource ds = server.getOracleDataSource("dataSource1");
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 		jdbcTemplate.update("delete from users");
 		jdbcTemplate.update("insert into users(id,name,age) values(?, ?, ?)", 1, "aaa", 20);

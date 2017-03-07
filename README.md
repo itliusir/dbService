@@ -18,9 +18,9 @@
 	InitialContext ctx = new InitialContext(properties);
 	DataRemote remote = (DataRemote)ctx.lookup("dataSource");
 	//获取OracleDataSource
-	DataSource ds = remote.getOracleDataSource();
+	DataSource ds = remote.getOracleDataSource("dataSource1");
 	//获取DB2DataSource
-	DataSource ds = remote.getDB2DataSource();
+	DataSource ds = remote.getDB2DataSource("dataSource1");
 	//获取SqlServerDataSource
-	DataSource ds = remote.getSqlserverDataSource();
+	DataSource ds = remote.getSqlserverDataSource("dataSource1");
 ```

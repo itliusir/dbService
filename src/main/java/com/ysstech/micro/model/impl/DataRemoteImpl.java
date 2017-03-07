@@ -3,12 +3,17 @@ package com.ysstech.micro.model.impl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.ysstech.micro.model.DataRemote;
+import com.ysstech.micro.model.JDBCBase;
+import com.ysstech.micro.util.ReadXMLUtil;
 
 /**
  * RMI服务端接口的实现
@@ -21,7 +26,7 @@ public class DataRemoteImpl extends UnicastRemoteObject implements DataRemote{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static ConcurrentHashMap<String, DataSource> map = new ConcurrentHashMap<String, DataSource>();
+	/*private static ConcurrentHashMap<String, DataSource> map = new ConcurrentHashMap<String, DataSource>();
 	
 	//oracle dataSource
 	@Value("${oracle.datasource.driverClassName}")
@@ -88,14 +93,14 @@ public class DataRemoteImpl extends UnicastRemoteObject implements DataRemote{
 	private String db2MinIdle;
 	
 	@Value("${db2.datasource.initial-size}")
-	private String db2InitSize;
+	private String db2InitSize;*/
 
 	public DataRemoteImpl() throws RemoteException {
 		super();
 	}
 
 	
-	@PostConstruct
+	/*@PostConstruct
 	public void setDataSourceMap() {
 		ComboPooledDataSource oraCpds = new ComboPooledDataSource();
 		ComboPooledDataSource sqlCpds = new ComboPooledDataSource();
@@ -132,25 +137,56 @@ public class DataRemoteImpl extends UnicastRemoteObject implements DataRemote{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
-	public ConcurrentHashMap<String, DataSource> getDataSourceMap() {
+	/*public ConcurrentHashMap<String, DataSource> getDataSourceMap() {
 		return map;
+	}*/
+	
+	@Override
+	public DataSource getOracleDataSource(String dataSourceName) throws Exception {
+		ComboPooledDataSource oraCpds = new ComboPooledDataSource();
+		JDBCBase jb = new JDBCBase();
+		jb = ReadXMLUtil.read("oracle", dataSourceName);
+		System.out.println(jb.toString());
+		oraCpds.setDriverClass(jb.getDriverClassName());
+		oraCpds.setJdbcUrl(jb.getUrl());
+		oraCpds.setUser(jb.getUsername());
+		oraCpds.setPassword(jb.getPassword());
+		oraCpds.setInitialPoolSize(Integer.parseInt(jb.getInitialSize()));
+		oraCpds.setMaxPoolSize(Integer.parseInt(jb.getMaxIdle()));
+		oraCpds.setMinPoolSize(Integer.parseInt(jb.getMinIdle()));
+		return oraCpds;
 	}
 	
 	@Override
-	public DataSource getOracleDataSource() throws Exception {
-		return getDataSourceMap().get("oracleDataSource");
-	}
-	
-	@Override
-	public DataSource getSqlserverDataSource() throws Exception {
-		return getDataSourceMap().get("sqlServerDataSource");
+	public DataSource getSqlserverDataSource(String dataSourceName) throws Exception {
+		ComboPooledDataSource sqlCpds = new ComboPooledDataSource();
+		JDBCBase jb = new JDBCBase();
+		jb = ReadXMLUtil.read("sqlServer", dataSourceName);
+		sqlCpds.setDriverClass(jb.getDriverClassName());
+		sqlCpds.setJdbcUrl(jb.getUrl());
+		sqlCpds.setUser(jb.getUsername());
+		sqlCpds.setPassword(jb.getPassword());
+		sqlCpds.setInitialPoolSize(Integer.parseInt(jb.getInitialSize()));
+		sqlCpds.setMaxPoolSize(Integer.parseInt(jb.getMaxIdle()));
+		sqlCpds.setMinPoolSize(Integer.parseInt(jb.getMinIdle()));
+		return sqlCpds;
 	}
 
 	@Override
-	public DataSource getDB2DataSource() throws Exception {
-		return getDataSourceMap().get("db2DataSource");
+	public DataSource getDB2DataSource(String dataSourceName) throws Exception {
+		ComboPooledDataSource db2Cpds = new ComboPooledDataSource();
+		JDBCBase jb = new JDBCBase();
+		jb = ReadXMLUtil.read("db2", dataSourceName);
+		db2Cpds.setDriverClass(jb.getDriverClassName());
+		db2Cpds.setJdbcUrl(jb.getUrl());
+		db2Cpds.setUser(jb.getUsername());
+		db2Cpds.setPassword(jb.getPassword());
+		db2Cpds.setInitialPoolSize(Integer.parseInt(jb.getInitialSize()));
+		db2Cpds.setMaxPoolSize(Integer.parseInt(jb.getMaxIdle()));
+		db2Cpds.setMinPoolSize(Integer.parseInt(jb.getMinIdle()));
+		return db2Cpds;
 	}
 }

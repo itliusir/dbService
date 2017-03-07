@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Context>  
+    <Resource name="oracle/dataSource1" 
+                driverClassName="oracle.jdbc.driver.OracleDriver"   
+                url="jdbc:oracle:thin:@127.0.0.1:1521:ysstech"   
+                username="hr"   
+                password="admin"   
+                initialSize="10"
+                maxIdle="20"
+                minIdle="5" />
+                
+    <Resource name="oracle/dataSource2" 
+                driverClassName="oracle.jdbc.driver.OracleDriver"   
+                url="jdbc:oracle:thin:@127.0.0.1:1521:ysstech"   
+                username="hr"   
+                password="admin"   
+                initialSize="10"
+                maxIdle="20"
+                minIdle="5" />
+                
+    <Resource name="sqlServer/dataSource1"
+                driverClassName="com.microsoft.jdbc.sqlserver.SQLServerDriver"   
+                url="jdbc:microsoft:sqlserver://127.0.0.1:1433;DatabaseName=test"   
+                username="yourUsername"   
+                password="yourPassword"   
+                initialSize="10"
+                maxIdle="20" 
+                minIdle="5" />
+                
+    <Resource name="db2/dataSource1"
+                driverClassName="com.ibm.db2.jcc.DB2Driver"   
+                url="jdbc:db2://sample.abc.ef.com:50000/test"   
+                username="yourUsername"   
+                password="yourPassword"   
+                initialSize="10"
+                maxIdle="20" 
+                minIdle="5" />
+</Context>
